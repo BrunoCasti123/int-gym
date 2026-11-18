@@ -53,4 +53,18 @@ describe("MemberList", () => {
     expect(list.totalDiscounted()).toBe(0);
   });
 
+  test("update the fee of a member", () => {
+    list.add(member);
+    list.updateFee("12345678",2000);
+    expect(list.getItems()[0].monthlyFee).toBe(2000);
+  });
+
+  test("reject updating the fee of a number that does not exist", () => {
+    expect(() => list.updateFee("99999999", 2000)).toThrow();
+  })
+
+  test("reject updating to an invalid fee", () => {
+    list.add(member);
+    expect(() => list.updateFee("12345678", 0)).toThrow();
+  })
 });
