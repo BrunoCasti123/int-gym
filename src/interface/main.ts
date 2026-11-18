@@ -11,6 +11,9 @@ const inpDocument = document.getElementById(
 ) as HTMLInputElement | null;
 const selPlan = document.getElementById("sel-plan") as HTMLSelectElement | null;
 const inpFee = document.getElementById("inp-fee") as HTMLInputElement | null;
+const inpDiscount = document.getElementById(
+  "discount",
+) as HTMLInputElement | null;
 const btnAdd = document.getElementById("btn-add") as HTMLButtonElement | null;
 const errorContainer = document.getElementById(
   "error-container",
@@ -33,12 +36,17 @@ const inpTotalMembers = document.getElementById(
 const inpTotalFees = document.getElementById(
   "inp-total-fees",
 ) as HTMLInputElement | null;
+const inpTotalDiscounted = document.getElementById(
+  "inp-total-discount",
+) as HTMLInputElement | null;
+
 
 function clearInputs(): void {
-  if (inpName && inpDocument && inpFee) {
+  if (inpName && inpDocument && inpFee && inpDiscount) {
     inpName.value = "";
     inpDocument.value = "";
     inpFee.value = "";
+    inpDiscount.value = "";
   }
 }
 
@@ -116,9 +124,10 @@ function updateList(): void {
 }
 
 function updateTotals(): void {
-  if (inpTotalMembers && inpTotalFees) {
+  if (inpTotalMembers && inpTotalFees && inpTotalDiscounted) {
     inpTotalMembers.value = String(memberList.getItems().length);
     inpTotalFees.value = String(memberList.totalFees());
+    inpTotalDiscounted.value = String(memberList.totalDiscounted())
   }
 }
 
@@ -134,7 +143,7 @@ loadMockData();
 updateList();
 updateTotals();
 
-if (btnAdd && inpName && inpDocument && selPlan && inpFee) {
+if (btnAdd && inpName && inpDocument && selPlan && inpFee && inpDiscount) {
   btnAdd.addEventListener("click", () => {
     try {
       const member = new Member({
@@ -143,6 +152,7 @@ if (btnAdd && inpName && inpDocument && selPlan && inpFee) {
         plan: selPlan.value as Plan,
         monthlyFee: Number(inpFee.value),
       });
+      member.discount = Number(inpDiscount.value);
       memberList.add(member);
       hideError();
       clearInputs();
