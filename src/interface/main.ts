@@ -81,7 +81,13 @@ function createFeeEditor(member: Member): HTMLDivElement {
   button.className = "btn btn-outline-secondary";
   button.textContent = "Guardar cuota";
   button.addEventListener("click", () => {
-    // TODO: editar la cuota del socio con el valor de input
+    try {
+      memberList.updateFee(member.documentId, Number(input.value));
+      updateList();
+      updateTotals();
+    } catch {
+      input.classList.add("is-invalid");
+    }
   });
   group.append(input, button);
   return group;
