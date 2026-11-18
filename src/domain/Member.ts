@@ -84,6 +84,10 @@ export class Member {
     this._discount = value;
   }
 
+  get discountedFee(): number {
+    return (this.monthlyFee * (100 - this.discount)) / 100;
+  }
+
   toString(): string {
     const text = `${this.name} (doc. ${this.documentId}) - Plan ${PLAN_LABELS[this.plan]} - $${this.monthlyFee}`;
     if (this.discount > 0) {
