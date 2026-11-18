@@ -81,8 +81,7 @@ describe("Member", () => {
   });
 
   test("reject a discount that is not an integer", () => {
-    member.discount = -1;
-    expect(() => (member.discount = 10.5)).toThrow();
+    expect(() => (member.discount = 10.5)).toThrow();  
   });
 
   test("show the discount as text when greater than 0", () => {
