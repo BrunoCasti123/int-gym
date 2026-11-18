@@ -97,9 +97,12 @@ function createCard(member: Member): HTMLDivElement {
   const title = document.createElement("h5");
   title.className = "card-title";
   title.textContent = member.name;
+  const badge = document.createElement("span");
+  badge.className = "badge text-bg-primary ms-2"
+  badge.textContent = PLAN_LABELS[member.plan];
+  title.append(badge);
   const lines = [
     `Documento: ${member.documentId}`,
-    `Plan: ${PLAN_LABELS[member.plan]}`,
     `Cuota mensual: $${member.monthlyFee}`,
   ];
   if (member.discount > 0) {
